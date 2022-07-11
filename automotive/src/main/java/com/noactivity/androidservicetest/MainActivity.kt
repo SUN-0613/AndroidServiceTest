@@ -1,12 +1,21 @@
 package com.noactivity.androidservicetest
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity: AppCompatActivity()
+class MainActivity: Activity()
 {
+
+    /**
+     * 初期化
+     */
+    init
+    {
+        Instance = this
+    }
 
     /**
      * 初回処理
@@ -41,6 +50,16 @@ class MainActivity: AppCompatActivity()
     private fun GetMyService(): Intent
     {
         return Intent(this@MainActivity, MyService::class.java)
+    }
+
+    companion object
+    {
+
+        /**
+         * インスタンス
+         */
+        public var Instance: MainActivity? = null
+
     }
 
 }
