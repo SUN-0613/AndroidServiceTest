@@ -15,6 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidServiceTest"
         >
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.ACCESSIBILITY_SHORTCUT_TARGET" />
+            </intent-filter>
+        </activity>
         <!--
         作成したサービスクラスを追加
             enabled:外部アプリからの利用可否

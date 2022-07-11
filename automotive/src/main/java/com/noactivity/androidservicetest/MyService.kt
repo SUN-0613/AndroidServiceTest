@@ -4,6 +4,10 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 
+/**
+ * サービスクラス
+ * https://qiita.com/b150005/items/bc7054a520d4b858dc0f
+ */
 class MyService: Service()
 {
 
@@ -20,7 +24,7 @@ class MyService: Service()
      */
     override fun onBind(p0: Intent?): IBinder?
     {
-        TODO("Not yet implemented")
+        return null
     }
 
     /**
