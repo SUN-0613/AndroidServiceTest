@@ -13,6 +13,7 @@ import android.view.InputEvent
 import android.view.MotionEvent
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
+import java.sql.DriverManager.println
 
 /**
  * サービスクラス
@@ -117,8 +118,8 @@ class MyService: Service()
     private fun sendTapEvent()
     {
 
-        var pointX: Float = 200f
-        var pointY: Float = 200f
+        var pointX: Float = 500f
+        var pointY: Float = 500f
 
         val downTime = SystemClock.uptimeMillis()
         val eventTime = SystemClock.uptimeMillis() + 1000
@@ -161,12 +162,24 @@ class MyService: Service()
 
              */
 
+            //InputManager.class.getDeclaredMethod("injectInputEvent", new Class[]{InputEvent.class, int.class})
+
+            val getMethod = InputManager::class.java.getDeclaredMethod("getInstance")
+            val manager = getMethod.invoke(null)
+
+            val method = InputManager::class.java.getDeclaredMethod(
+                "injectInputEvent",
+                InputEvent::class.java,
+                Int::class.javaPrimitiveType)
+
+            /*
             val manager = applicationContext.getSystemService(Context.INPUT_SERVICE) as InputManager
             var method: Method = InputManager::class.java.getMethod(
                 "injectInputEvent",
                 InputEvent::class.java,
                 Int::class.javaPrimitiveType
             )
+            */
 
             method.invoke(manager, event, 2)
 
