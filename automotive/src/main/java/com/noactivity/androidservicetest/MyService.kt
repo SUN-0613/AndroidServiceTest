@@ -1,9 +1,6 @@
 package com.noactivity.androidservicetest
 
-import android.app.Instrumentation
 import android.app.Service
-import android.app.UiAutomation
-import android.content.Context
 import android.content.Intent
 import android.hardware.input.InputManager
 import android.os.IBinder
@@ -12,8 +9,6 @@ import android.view.InputDevice
 import android.view.InputEvent
 import android.view.MotionEvent
 import java.lang.reflect.InvocationTargetException
-import java.lang.reflect.Method
-import java.sql.DriverManager.println
 
 /**
  * サービスクラス
@@ -59,7 +54,7 @@ class MyService: Service()
         //super.onStartCommand(intent, flags, startId)
 
         /* バックグラウンドで行う処理を記述 */
-        Run()
+        run()
 
         // エラー発生時、自動で再起動しない設定とする
         return START_NOT_STICKY
@@ -84,7 +79,7 @@ class MyService: Service()
     /**
      * 実行処理
      */
-    private fun Run()
+    private fun run()
     {
 
         println("Run:Start実行")
@@ -118,14 +113,14 @@ class MyService: Service()
     private fun sendTapEvent()
     {
 
-        var pointX: Float = 500f
-        var pointY: Float = 500f
+        val pointX = 500f
+        val pointY = 500f
 
         val downTime = SystemClock.uptimeMillis()
         val eventTime = SystemClock.uptimeMillis() + 1000
 
-        var event1 = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, pointX, pointY, 0)
-        var event2 = MotionEvent.obtain(eventTime + 100, eventTime + 2000, MotionEvent.ACTION_UP, pointX, pointY, 0)
+        val event1 = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, pointX, pointY, 0)
+        val event2 = MotionEvent.obtain(eventTime + 100, eventTime + 2000, MotionEvent.ACTION_UP, pointX, pointY, 0)
 
         event1.source = InputDevice.SOURCE_TOUCHSCREEN
         event2.source = InputDevice.SOURCE_TOUCHSCREEN
@@ -182,6 +177,8 @@ class MyService: Service()
             */
 
             method.invoke(manager, event, 2)
+
+            println("Tap OK")
 
         }
         catch (e: NoSuchMethodException)
