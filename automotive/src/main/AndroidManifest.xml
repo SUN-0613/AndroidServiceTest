@@ -13,6 +13,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidServiceTest" />
+        android:theme="@style/Theme.AndroidServiceTest"
+        >
+        <!--
+        作成したサービスクラスを追加
+            enabled:外部アプリからの利用可否
+        -->
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="false"
+            />
+    </application>
 
 </manifest>
