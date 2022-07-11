@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.noactivity.androidservicetest">
+    package="com.noactivity.androidservicetest"
+    android:sharedUserId="android.uid.system"
+    >
 
     <uses-feature
         android:name="android.hardware.type.automotive"
