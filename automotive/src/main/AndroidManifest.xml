@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.noactivity.androidservicetest"
-    android:sharedUserId="android.uid.system"
     >
 
     <uses-feature
         android:name="android.hardware.type.automotive"
         android:required="true" />
 
-    <uses-permission
-        android:name="android.permission.INJECT_EVENTS" />
+    <uses-permission android:name="android.permission.MONITOR_INPUT"/>
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+    <uses-permission android:name="android.permission.INJECT_EVENTS" />
 
     <application
         android:allowBackup="true"

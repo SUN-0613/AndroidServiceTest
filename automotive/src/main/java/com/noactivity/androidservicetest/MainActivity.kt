@@ -1,7 +1,9 @@
 package com.noactivity.androidservicetest
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.hardware.input.InputManager
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
@@ -59,6 +61,14 @@ class MainActivity: Activity()
          * インスタンス
          */
         public var Instance: MainActivity? = null
+
+        /**
+         * InputManagerを取得
+         */
+        fun getInputManager(): InputManager
+        {
+            return Instance!!.getSystemService(Context.INPUT_SERVICE) as InputManager
+        }
 
     }
 

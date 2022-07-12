@@ -9,6 +9,7 @@ import android.view.InputDevice
 import android.view.InputEvent
 import android.view.MotionEvent
 import java.lang.reflect.InvocationTargetException
+import java.util.concurrent.TimeUnit
 
 /**
  * サービスクラス
@@ -82,10 +83,12 @@ class MyService: Service()
     private fun run()
     {
 
+        val seconds: Int = 2000
+
         println("Run:Start実行")
 
         // 10秒間隔でTapイベントを発行する
-        var raiseEvent = SystemClock.uptimeMillis() + 1000
+        var raiseEvent = SystemClock.uptimeMillis() + seconds
 
         while (isRun)
         {
@@ -99,7 +102,7 @@ class MyService: Service()
 
                 sendTapEvent()
 
-                raiseEvent = SystemClock.uptimeMillis() + 1000
+                raiseEvent = SystemClock.uptimeMillis() + seconds
 
             }
 
@@ -113,19 +116,20 @@ class MyService: Service()
     private fun sendTapEvent()
     {
 
-        val pointX = 500f
-        val pointY = 500f
+        val pointX = 150f
+        val pointY = 300f
 
         val downTime = SystemClock.uptimeMillis()
         val eventTime = SystemClock.uptimeMillis() + 1000
 
         val event1 = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, pointX, pointY, 0)
-        val event2 = MotionEvent.obtain(eventTime + 100, eventTime + 2000, MotionEvent.ACTION_UP, pointX, pointY, 0)
-
         event1.source = InputDevice.SOURCE_TOUCHSCREEN
-        event2.source = InputDevice.SOURCE_TOUCHSCREEN
-
         injectInputEvent(event1)
+
+        TimeUnit.SECONDS.sleep(1)
+
+        val event2 = MotionEvent.obtain(eventTime + 100, eventTime + 2000, MotionEvent.ACTION_UP, pointX, pointY, 0)
+        event2.source = InputDevice.SOURCE_TOUCHSCREEN
         injectInputEvent(event2)
 
     }
@@ -139,44 +143,10 @@ class MyService: Service()
         try
         {
 
-            /*
-            val instrumentation = Instrumentation()
-            val ui = instrumentation.uiAutomation
-            ui.injectInputEvent(event, false)
-             */
+            val inputManager = MainActivity.getInputManager() //InputManager::class.java.getMethod("getInstance").invoke(null) as InputManager
+            val injectInputEventMethod = InputManager::class.java.getMethod("injectInputEvent", InputEvent::class.java, Int::class.javaPrimitiveType)
 
-            /*
-            val manager = MainActivity.Instance?.getSystemService(Context.INPUT_METHOD_SERVICE)
-
-            if (manager != null)
-            {
-
-                val method = manager!!.javaClass.getMethod("injectInputEvent", InputEvent::class.java, Integer.TYPE)
-                method.invoke(manager!!, event, 0)
-            }
-
-             */
-
-            //InputManager.class.getDeclaredMethod("injectInputEvent", new Class[]{InputEvent.class, int.class})
-
-            val getMethod = InputManager::class.java.getDeclaredMethod("getInstance")
-            val manager = getMethod.invoke(null)
-
-            val method = InputManager::class.java.getDeclaredMethod(
-                "injectInputEvent",
-                InputEvent::class.java,
-                Int::class.javaPrimitiveType)
-
-            /*
-            val manager = applicationContext.getSystemService(Context.INPUT_SERVICE) as InputManager
-            var method: Method = InputManager::class.java.getMethod(
-                "injectInputEvent",
-                InputEvent::class.java,
-                Int::class.javaPrimitiveType
-            )
-            */
-
-            method.invoke(manager, event, 2)
+            injectInputEventMethod.invoke(inputManager, event, 2)
 
             println("Tap OK")
 
